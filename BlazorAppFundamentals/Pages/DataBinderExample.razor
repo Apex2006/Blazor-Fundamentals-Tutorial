@@ -1,0 +1,65 @@
+@page "/databinderexample"
+
+<h3>🔗 Data Binding Examples</h3>
+<p>
+    <b>Data binding</b> in Blazor allows you to connect UI elements to C# properties so that data can flow between them.
+</p>
+<p>
+    <b>One-way binding</b> means data moves from your C# code to the UI only, so changes in code update the UI but not vice versa.
+</p>
+<p>
+    <b>Two-way binding</b> (using <code>&#64;bind</code>) keeps the UI and C# property in sync, so changes in either are reflected in the other automatically.
+</p>
+<hr />
+
+
+<h4>1. One-Way Binding (Async Search)</h4>
+<p>This simulates searching a database. The data only flows one way (C# → UI).</p>
+   
+<input @bind="searchQuery" class="form-control w-50 d-inline-block" placeholder="Enter search term..." />
+<button class="btn btn-primary ms-2" @onclick="SearchData">Search</button>
+
+<p>
+    @if (isLoading)
+    {
+        <span class="text-info">🔄 Searching...</span>
+    }
+    else if (!string.IsNullOrEmpty(searchResult))
+    {
+        <span class="text-success">✅ Result: @searchResult</span>
+    }
+</p>
+
+<hr />
+
+
+<h4>2. Two-Way Binding (Live Sync)</h4>
+<p>Using <code>&#64;bind</code>, the input box and C# property are kept in sync.</p>
+
+<input @bind="twoWayText" class="form-control w-50" placeholder="Type something..." />
+<p>You typed: <b>@twoWayText</b></p>
+
+<hr />
+
+@code {
+    // For One-Way Binding
+    private string searchQuery = "";
+    private string? searchResult;
+    private bool isLoading = false;
+
+    private async Task SearchData()
+    {
+        isLoading = true;
+        searchResult = null;
+
+        // Simulate async database or API delay
+        await Task.Delay(3000);
+
+        // Return a fake search result
+        searchResult = $"150 results for '{searchQuery}'!";
+        isLoading = false;
+    }
+
+    // For Two-Way Binding
+    private string twoWayText = "";
+}

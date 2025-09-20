@@ -1,0 +1,76 @@
+@page "/ComponentEventHandling"
+
+<h3>Event Handling Examples</h3>
+
+<hr />
+
+<!-- Example 1: @onclick -->
+<h4>1. &#64;onclick event</h4>
+<button class="btn btn-primary" @onclick="OnButtonClick">Click Me</button>
+<p>You clicked the button @clickCount times.</p>
+
+<hr />
+
+<!-- Example 2: @oninput -->
+<h4>2. &#64;oninput event</h4>
+<input class="form-control" @oninput="OnInputChanged" placeholder="Type something..." />
+<p>You typed: <strong>@typedMessage</strong></p>
+
+<hr />
+
+<!-- Example 3: @onmouseover -->
+<h4>3. &#64;onmouseover event</h4>
+<div @onmouseover="OnMouseOver"
+     style="width:200px; height:100px; background-color:lightgray; text-align:center; line-height:100px;">
+    Hover over me!
+</div>
+<p>@mouseMessage</p>
+
+<hr />
+
+<!-- Example 4: @onkeydown -->
+<h4>4. &#64;onkeydown event</h4>
+<input class="form-control" @onkeydown="OnKeyDown" placeholder="Press a key..." />
+<p>Last key pressed: <strong>@lastKey</strong></p>
+
+<hr />
+
+<!-- Example 5: @onfocus & @onblur -->
+<h4>5. &#64;onfocus & &#64;onblur events</h4>
+<input class="form-control" 
+       @onfocus="OnFocus" 
+       @onblur="OnBlur" 
+       placeholder="Click here then click away..." />
+<p>@focusMessage</p>
+
+@code {
+    // Example 1: @onclick
+    private int clickCount = 0;
+    private void OnButtonClick() => clickCount++;
+
+    // Example 2: @oninput
+    private string typedMessage = "";
+    private void OnInputChanged(ChangeEventArgs e)
+    {
+        typedMessage = e.Value?.ToString();
+    }
+
+    // Example 3: @onmouseover
+    private string mouseMessage = "";
+    private void OnMouseOver(MouseEventArgs e)
+    {
+        mouseMessage = $"Mouse over at X={e.ClientX}, Y={e.ClientY}";
+    }
+
+    // Example 4: @onkeydown
+    private string lastKey = "";
+    private void OnKeyDown(KeyboardEventArgs e)
+    {
+        lastKey = e.Key;
+    }
+
+    // Example 5: @onfocus & @onblur
+    private string focusMessage = "";
+    private void OnFocus(FocusEventArgs e) => focusMessage = "Input is focused!";
+    private void OnBlur(FocusEventArgs e) => focusMessage = "Input lost focus!";
+}
